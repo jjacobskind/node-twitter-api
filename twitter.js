@@ -277,10 +277,10 @@ Twitter.prototype.updateWithMedia = function(params, accessToken, accessTokenSec
 	var media = params["media"];
 	for (var i = 0; i < media.length; i++) {
 		// if the content of media[i] is an existing path, create a ReadStream, otherwise just append the content
-		if (fs.existsSync(media[i])) {
-			form.append("media[]", fs.createReadStream(media[i]));
+		if (fs.existsSync(media)) {
+			form.append("media[]", fs.createReadStream(media));
 		} else {
-			form.append("media[]", media[i]);
+			form.append("media[]", media);
 		}
 	}
 }
@@ -549,7 +549,7 @@ Twitter.prototype.mutes = function(type, params, accessToken, accessTokenSecret,
 	if (method == "GET") {
 		this.oa.get(baseUrl + "mutes/" + url + ".json?" + querystring.stringify(params), accessToken, accessTokenSecret, function(error, data, response) {
 			if (error) {
-			callback(error, data, response, baseUrl + "mutes/" + url + ".json?" + querystring.stringify(params));
+				callback(error, data, response, baseUrl + "mutes/" + url + ".json?" + querystring.stringify(params));
 			} else {
 				try {
 					callback(null, JSON.parse(data), response);
